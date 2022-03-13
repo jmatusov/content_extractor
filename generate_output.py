@@ -103,16 +103,16 @@ def generate_content_output(data, dic):
 
     filename = f'{round(time() * 1000)}.html'
     f = open(filename, 'a', encoding='utf-8')
-    f.write("<body><font face='verdana'>")
+    f.write('<body><font face="verdana"><div style="width:50%;margin: 0 auto;">')
     f.close()
 
     for index, row in data.iterrows():
         f = open(filename, 'a', encoding='utf-8')
-        f.write(row['concat_text'])
+        f.write(row['concat_text']+'<br>\n')
         f.close()
 
     f = open(filename, 'a', encoding='utf-8')
-    f.write('</font></body>')
+    f.write('</div></font></body>')
     f.close()
 
 
