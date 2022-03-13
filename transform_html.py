@@ -3,7 +3,7 @@ import re
 from verbosing import th_verbose
 
 
-def transform_site(verbose):
+def transform_site(dic, verbose):
     if verbose:
         print(th_verbose.get('transforming'))
 
@@ -26,6 +26,7 @@ def transform_site(verbose):
 
         for i, element in enumerate(soup.find_all()):
             element['unique__index'] = i
+            dic[str(i)] = element.name
 
         soup_string = str(soup)
         soup_string = re.sub("&lt;span class='text_to_classify_79660''&gt;",
@@ -36,6 +37,7 @@ def transform_site(verbose):
 
         with open('site.html', "w", encoding='utf-8') as edited_html_file:
             edited_html_file.write(soup_string)
+
     except Exception as e:
         if verbose:
             print(e)

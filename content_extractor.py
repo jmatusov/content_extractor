@@ -51,7 +51,7 @@ class ContentExtractor:
         @defer.inlineCallbacks
         def crawl():
             yield runner.crawl(HtmlSpider, url=self.url, verbose=self.verbose)
-            transform_site(self.verbose)
+            transform_site(element_dic, self.verbose)
             yield runner.crawl(FeatureSpider, result=extraction_result, verbose=self.verbose)
             reactor.stop()
 
@@ -60,12 +60,11 @@ class ContentExtractor:
         else:
             raise AttributeError('url is not type str or is None')
 
+        element_dic = {}
         extraction_result = []
         runner = CrawlerRunner()
         crawl()
         reactor.run()
-
-        assert len(extraction_result) > 0, ce_verbose.get('assert')
 
         features = pd.DataFrame(extraction_result,
                                 columns=['url_hash', 'is_content', 'text', 'text_length', 'text_punctuation',
@@ -75,7 +74,7 @@ class ContentExtractor:
                                          'desc_header', 'desc_footer', 'desc_li', 'desc_table', 'desc_h1', 'desc_h2',
                                          'desc_h3', 'desc_h4', 'desc_h5', 'desc_h6', 'desc_a', 'desc_title',
                                          'desc_article', 'boilerplate_text', 'contains_word_char', 'element_depth',
-                                         'children_count', 'siblings_count'])
+                                         'children_count', 'siblings_count', 'href'])
 
         features = additional_features(features, self.verbose)
 
@@ -83,7 +82,7 @@ class ContentExtractor:
         features['is_content'] = predicted
 
         if self.verbose != 'none':
-            generate_output(features, self.output_type, self.verbose)
+            generate_output(features, element_dic, self.output_type, self.verbose)
 
         return features
 

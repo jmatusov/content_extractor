@@ -56,6 +56,10 @@ class FeatureSpider(scrapy.Spider):
             children_count = element.xpath('count(../text())').extract()
             siblings_count = element.xpath('count(../../text())').extract()
 
+            href = ''
+            if element_tag == 'a':
+                href = element.xpath('../@href').get()
+
             self.result.append([
                 url_id,
                 0,
@@ -91,7 +95,8 @@ class FeatureSpider(scrapy.Spider):
                 contains_word_char,
                 int(path.count('<')) - 2,  # -2 lebo nepocitame <html> a <body>
                 children_count[0],
-                siblings_count[0]
+                siblings_count[0],
+                href
             ])
 
 
