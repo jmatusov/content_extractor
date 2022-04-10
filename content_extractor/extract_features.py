@@ -1,7 +1,7 @@
 import scrapy
 import os
-from verbosing import ef_verbose
-from constants import BOILERPLATE_STRINGS
+from content_extractor.verbosing import ef_verbose
+from content_extractor.constants import BOILERPLATE_STRINGS
 import re
 
 
@@ -15,17 +15,18 @@ class FeatureSpider(scrapy.Spider):
         'LOG_LEVEL': 'DEBUG',
     }
 
-    def __init__(self, result, verbose=True, **kwargs):
+    def __init__(self, result, url, verbose=True, **kwargs):
         super().__init__(**kwargs)
         self.result = result
         self.verbose = verbose
+        self.url = url
 
     def parse(self, response, **kwargs):
         if self.verbose:
             print(ef_verbose.get('extracting'))
         for element in response.xpath('//*[normalize-space(text())]'):
 
-            url_id = response.url.rsplit('/', 1)[-1]
+            url_id = self.url
             text_normalized = element.xpath('normalize-space(./text())').get()
             text_length = len(text_normalized)
 

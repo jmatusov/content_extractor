@@ -1,6 +1,6 @@
 import pandas as pd
-from verbosing import af_verbose
-from constants import BOILERPLATE_CLASSES_IDS
+from content_extractor.verbosing import af_verbose
+from content_extractor.constants import BOILERPLATE_CLASSES_IDS
 
 
 def is_boilerplate_class_or_id(text):

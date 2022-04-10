@@ -1,5 +1,5 @@
-import pandas as pd
-from verbosing import clf_verbose
+from content_extractor.verbosing import clf_verbose
+
 
 def classify(df, clf, verbose):
     if verbose:

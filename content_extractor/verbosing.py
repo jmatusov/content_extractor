@@ -26,6 +26,7 @@ ce_verbose = {
 ge_verbose = {
     'full': 'Generating full output | file result.csv...',
     'content': 'Generating content output | file result.csv...',
+    'html': 'Generating html file...',
     'process': 'Generating html output...',
     'assert': '0 rows were classified as content'
 }

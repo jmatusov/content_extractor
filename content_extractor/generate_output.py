@@ -1,31 +1,15 @@
-from verbosing import ge_verbose
+from content_extractor.verbosing import ge_verbose
 import pandas as pd
 import re
 from time import time
 
 
-def generate_output(df, dic, output_type, verbose):
-    if output_type == 'full':
-        if verbose:
-            print(ge_verbose.get('full'))
-        generate_full_output(df)
-    else:
-        if verbose:
-            print(ge_verbose.get('content'))
-        generate_content_output(df, dic)
+def generate_output(data, dic, verbose):
+    if verbose:
+        print(ge_verbose.get('html'))
 
-
-def generate_full_output(data):
-    data.to_csv('result.csv')
-
-
-def generate_content_output(data, dic):
     data = data.loc[data['is_content'] == 1]
     assert len(data) > 0, ge_verbose.get('assert')
-
-    data.to_csv('result.csv')
-
-    print(ge_verbose.get('process'))
 
     data = data[['text', 'index_path', 'href']]
     data = data.join(pd.DataFrame(
@@ -103,7 +87,8 @@ def generate_content_output(data, dic):
 
     filename = f'{round(time() * 1000)}.html'
     f = open(filename, 'a', encoding='utf-8')
-    f.write('<body><font face="verdana"><div style="width:50%;margin: 0 auto;">')
+    f.write('<body style="background-color: gray;"><font face="verdana"><div style="width:50%;margin: 0 '
+            'auto;padding: 10px;background-color: white;">')
     f.close()
 
     for index, row in data.iterrows():

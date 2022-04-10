@@ -1,4 +1,16 @@
 from content_extractor.content_extractor import ContentExtractor
+from multiprocessing import Process, Manager
+
+
+def f(url, e, ns):
+    ns.df = e.start(url)
+
+
+def run_extractor(url, e, ns):
+    p = Process(target=f, args=(url, e, ns,))
+    p.start()
+    p.join()
+
 
 if __name__ == "__main__":
     url_list = [
@@ -10,7 +22,14 @@ if __name__ == "__main__":
     url = 'https://screenrant.com/murder-mystery-2-perfect-adam-sandler/'
 
     extractor = ContentExtractor(output_type='content', clf='rfc', generate_html=True, verbose=True)
-    result = extractor.start(url_list)
+
+    manager = Manager()
+    namespace = manager.Namespace()
+
+    run_extractor(url, extractor, namespace)
+    r1 = namespace.df
+    run_extractor(url_list, extractor, namespace)
+    r2 = namespace.df
 
     breakpoint()
 

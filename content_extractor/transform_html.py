@@ -1,6 +1,6 @@
 from bs4 import BeautifulSoup, Comment, Doctype
 import re
-from verbosing import th_verbose
+from content_extractor.verbosing import th_verbose
 
 
 def transform_site(dic, verbose):

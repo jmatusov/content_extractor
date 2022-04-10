@@ -1,6 +1,5 @@
 import scrapy
-from hashlib import md5
-from verbosing import ds_verbose
+from content_extractor.verbosing import ds_verbose
 
 
 class HtmlSpider(scrapy.Spider):
