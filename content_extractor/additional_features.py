@@ -39,40 +39,15 @@ def additional_features(df, verbose):
         }, index=df.index
     ))
 
+    list_of_elements = ['td', 'p', 'b', 'small', 'em', 'h1', 'cite', 'a', 'li', 'strong', 'label', 'span', 'h2', 'i', 'u']
+    
     for index, row in df.iterrows():
-        match row['element']:
-            case 'td':
-                df.at[index, 'element_td'] = 1
-            case 'p':
-                df.at[index, 'element_p'] = 1
-            case 'b':
-                df.at[index, 'element_b'] = 1
-            case 'small':
-                df.at[index, 'element_small'] = 1
-            case 'em':
-                df.at[index, 'element_em'] = 1
-            case 'h1':
-                df.at[index, 'element_h1'] = 1
-            case 'cite':
-                df.at[index, 'element_cite'] = 1
-            case 'a':
-                df.at[index, 'element_a'] = 1
-            case 'li':
-                df.at[index, 'element_li'] = 1
-            case 'strong':
-                df.at[index, 'element_strong'] = 1
-            case 'label':
-                df.at[index, 'element_label'] = 1
-            case 'span':
-                df.at[index, 'element_span'] = 1
-            case 'h2':
-                df.at[index, 'element_h2'] = 1
-            case 'i':
-                df.at[index, 'element_i'] = 1
-            case 'u':
-                df.at[index, 'element_u'] = 1
+        if row['element'] in list_of_elements:
+            df.at[index, f'element_{row["element"]}'] = 1
+        
         if row['element_parent'] in selected_parents:
             df.at[index, 'has_selected_parent'] = 1
+            
         df.at[index, 'boilerplate_class'] = is_boilerplate_class_or_id(str(row['element_class']))
         df.at[index, 'boilerplate_class_in_path'] = is_boilerplate_class_or_id(str(row['full_path']))
 
