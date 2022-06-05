@@ -10,7 +10,7 @@ if __name__ == "__main__":
     url = 'https://screenrant.com/murder-mystery-2-perfect-adam-sandler/'
 
     extractor = ContentExtractor(output_type='content', clf='rfc', generate_html=True, verbose=True)
-    result = extractor.start(url_list)
+    result = extractor.start(url)
 
     breakpoint()
 
